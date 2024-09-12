@@ -7,10 +7,20 @@
 ~ sign up 
 ~ form validation 
 ~ useRef
-
+~ firebase setup
+~ deploy an app to production
+~ Create sign up user account
+~ Implemented sign in user Api 
+~ created  Reduxstore with userSlices
+~ Implemented Sign out
+~ Update Profile
+~ fatch from TMDB Movies
+~
+~
 
 #Features
- 1. Header
- 2. BackGround video playing  
+- Login/Sign up form
+ -Header
+ -BackGround video playing  
 
  
