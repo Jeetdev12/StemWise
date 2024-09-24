@@ -58,7 +58,7 @@ const Header = () => {
                         alt="usericon"
                         src={user.photoURL}
                     />
-                    <button className="font-bold p-2" onClick={handleSignOut}>
+                    <button className="font-bold text-white p-2" onClick={handleSignOut}>
                         (Sign Out )
                     </button>
                 </div>

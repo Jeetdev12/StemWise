@@ -28,6 +28,15 @@
 ~ Update Store with Trailer videos data
 ~ Embeded the YT video  and make it autoPlayt & mute
 ~ Tailwind css to make main container look good 
+~ Build secondary container
+~    MovieList
+~    MovieCard
+~ TMDB IMAGE CDN_URL(IMG_CDN)
+~ Made Browse page amazing with the tailwind css
+~ usePopular custom hook 
+~ useTopRated custom hook
+~ useUpcoming custom hook 
+
  
 #Features
 - Login/Sign up form
