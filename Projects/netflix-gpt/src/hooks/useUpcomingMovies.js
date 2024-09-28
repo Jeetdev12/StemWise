@@ -14,7 +14,7 @@ const useUpcomingMovies = () => {
         );
         const json = await data.json();
         dispatch(addUpcomingMovies(json.results));
-        console.log("NowPlayingList : ", json.results);
+        // console.log("NowPlayingList : ", json.results);
     };
     useEffect(() => {
         getUpcomingMovies();

@@ -13,4 +13,11 @@ export const API_OPTIONS = {
     }
 };
 
+export const SUPPORTED_LANGUAGES = [
+    { identifier: 'en', name: "English" },
+    { identifier: 'hn', name: "Hindi" },
+    { identifier: 'spn', name: "Spanish" },
+    { identifier: 'zpn', name: "Japanese" },
+];
+
 export const IMG_CDN = "https://image.tmdb.org/t/p/w500/"

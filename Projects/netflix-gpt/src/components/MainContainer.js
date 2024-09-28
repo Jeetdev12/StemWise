@@ -9,7 +9,7 @@ const MainContainer = () => {
 
     if (!movies) return;
     const mainMovie = movies[0];
-    console.log("BackGround Video:", mainMovie)
+    // console.log("BackGround Video:", mainMovie)
 
     const { original_title, overview, id } = mainMovie || {};
 

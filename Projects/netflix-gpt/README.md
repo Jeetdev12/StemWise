@@ -36,7 +36,11 @@
 ~ usePopular custom hook 
 ~ useTopRated custom hook
 ~ useUpcoming custom hook 
-
+~ GPT Search Page
+~ GPT Search bar
+~ Multi- language Feature in our App
+~ 
+  
  
 #Features
 - Login/Sign up form
