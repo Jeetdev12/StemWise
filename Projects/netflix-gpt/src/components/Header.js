@@ -62,7 +62,7 @@ const Header = () => {
             <img className="w-44 " src={logoURL} alt="logo" />
             {user && (
                 <div className="  flex p-2  ">
-                    {showGptSearch && (<select className="p-2 m-2 bg-gray-900 text-white" onClick={handleLanguageChange}>
+                    {showGptSearch && (<select className="p-2 m-2 bg-gray-900 text-white" onClick={handleLanguageChange} >
                         {SUPPORTED_LANGUAGES.map((lang) => (
                             <option key={lang.identifier} value={lang.identifier}>
                                 {lang.name}

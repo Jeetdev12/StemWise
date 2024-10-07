@@ -1,10 +1,11 @@
 import { API_OPTIONS } from "../utilis/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNowPlayingMovies } from "../utilis/movieSlice";
 import { useEffect } from "react";
 
 const useNowPlayingMovies = () => {
     const dispatch = useDispatch();
+    const nowPlayingMovies = useSelector((store) => store.movies.nowPlayingMovies)
 
     // fetch data from TMDB and update store
     const getNowPlayingMovies = async () => {
@@ -17,7 +18,7 @@ const useNowPlayingMovies = () => {
         // console.log("NowPlayingList : ", json.results);
     };
     useEffect(() => {
-        getNowPlayingMovies();
+        if (!nowPlayingMovies) getNowPlayingMovies();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };

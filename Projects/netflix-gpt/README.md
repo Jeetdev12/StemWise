@@ -39,7 +39,14 @@
 ~ GPT Search Page
 ~ GPT Search bar
 ~ Multi- language Feature in our App
-~ 
+~ Get Google Gemini  Api Key
+~ Gpt Search API Call
+~ fetched gptMoviesSuggestions from TMDB
+~ created gptSlice added data
+~ Resused Movie List component to make movie suggestion container
+~ Memoization
+~ Added .env file
+~ Adding .env file to gitignore
   
  
 #Features
@@ -52,6 +59,12 @@
    - Trailer in BackGround
    - Title & description 
    - MovieSuggestion 
-   -  
+        -MovieLists * N
+   -  Browse (after authentication)
+-NetflixGPT
+   -Search Bar
+   -Movie Suggestions
+
+
 
  

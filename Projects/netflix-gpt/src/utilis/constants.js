@@ -9,10 +9,9 @@ export const API_OPTIONS = {
     method: 'GET',
     headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjkwYTA3NzkwNGI4OTQ2YjdkM2YxZTkzYTZlODRjYyIsIm5iZiI6MTcyNjMyNjc4Ni4yNDkwODUsInN1YiI6IjY2ZTU3ZDg0NjRkYmIzYmUxODJlNDUwNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oJurNgiK4FsFsS4Sp-1XflR2LbgfMkaHQgDPI4w-MKw'
+        Authorization: 'Bearer' + process.env?.REACT_APP_API_KEY
     }
 };
-
 export const SUPPORTED_LANGUAGES = [
     { identifier: 'en', name: "English" },
     { identifier: 'hn', name: "Hindi" },
@@ -21,3 +20,6 @@ export const SUPPORTED_LANGUAGES = [
 ];
 
 export const IMG_CDN = "https://image.tmdb.org/t/p/w500/"
+
+export const OPENAI_KEY = "AIzaSyCoerRMbryL_rB41dLPJLofdh4gdOPAVdU"
+export const API_KEY = process.env.REACT_APP_TMDB_KEY; // Google gemini ai API key

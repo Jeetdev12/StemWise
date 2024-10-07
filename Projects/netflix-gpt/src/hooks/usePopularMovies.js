@@ -1,10 +1,11 @@
 import { API_OPTIONS } from "../utilis/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPopularMovies } from "../utilis/movieSlice";
 import { useEffect } from "react";
 
 const usePopularMovies = () => {
     const dispatch = useDispatch();
+    const popularMovies = useSelector((store) => store.movies.popularMovies)
 
     // fetch data from TMDB and update store
     const getPopularMovies = async () => {
@@ -17,7 +18,7 @@ const usePopularMovies = () => {
         // console.log("NowPlayingList : ", json.results);
     };
     useEffect(() => {
-        getPopularMovies();
+        if (!popularMovies) getPopularMovies();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };
