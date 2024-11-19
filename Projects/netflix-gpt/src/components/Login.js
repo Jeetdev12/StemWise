@@ -87,12 +87,12 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute">
-        <img src={backgroundURL} alt="bg" />
+      <div className="fixed">
+        <img className="h-screen w-screen object-cover" src={backgroundURL} alt="bg" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className=" w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 rounded-xl bg-opacity-80 text-white "
+        className=" w-full md:w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 rounded-xl bg-opacity-80 text-white "
       >
         <h1 className=" font-bold text-2xl p-2 m-4 text-white ">
           {isSignInForm ? "Sign In" : "Sign Up"}{" "}
@@ -103,7 +103,7 @@ const Login = () => {
             ref={name}
             type="text"
             placeholder="Full Name "
-            className="p-2 m-2 w-full bg-opacity-35 border-grey-50 bg-yellow-300"
+            className="p-2 m-2 w-full bg-opacity-35 border-grey-50 bg-gray-700"
           />
         )}
         <input

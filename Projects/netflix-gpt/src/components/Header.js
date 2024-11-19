@@ -52,36 +52,41 @@ const Header = () => {
     };
 
     const handleLanguageChange = (e) => {
-        dispatch(changeLanguage(e.target.value))
-    }
+        dispatch(changeLanguage(e.target.value));
+    };
 
     const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
     return (
-        <div className=" absolute w-screen px-8  bg-gradient-to-bl from-black z-10 flex justify-between">
-            <img className="w-44 " src={logoURL} alt="logo" />
+        <div className="fixed  w-screen px-[20%] md:px-8  bg-gradient-to-bl from-black sm:bg-blue-900 md:bg-green-900 z-30 flex flex-col md:flex-row justify-between">
+            <img className="w-44 mx-auto md:mx-0" src={logoURL} alt="logo" />
             {user && (
-                <div className="  flex p-2  ">
-                    {showGptSearch && (<select className="p-2 m-2 bg-gray-900 text-white" onClick={handleLanguageChange} >
-                        {SUPPORTED_LANGUAGES.map((lang) => (
-                            <option key={lang.identifier} value={lang.identifier}>
-                                {lang.name}
-                            </option>
-                        ))}
-                    </select>)}
+                <div className="  flex p-2 justify-between ">
+                    {showGptSearch && (
+                        <select
+                            className="p-2 m-2 bg-gray-900 text-white"
+                            onClick={handleLanguageChange}
+                        >
+                            {SUPPORTED_LANGUAGES.map((lang) => (
+                                <option key={lang.identifier} value={lang.identifier}>
+                                    {lang.name}
+                                </option>
+                            ))}
+                        </select>
+                    )}
                     <button
-                        className="py-2 px-4 my-2 mx-4 bg-red-600 text-white rounded-sm"
+                        className="py-2 px-4 my-2 mx-4 bg-green-700 text-white rounded-sm"
                         onClick={handleGptSearchClick}
                     >
                         {showGptSearch ? "Homepage" : "GPT Search"}
                     </button>
                     <img
-                        className="w-12 h-12 rounded-md "
+                        className="hidden md:block w-9 h-9 mt-3 rounded-full"
                         alt="usericon"
                         src={user.photoURL}
                     />
                     <button className="font-bold text-white p-2" onClick={handleSignOut}>
-                        (Sign Out )
+                        Sign Out
                     </button>
                 </div>
             )}

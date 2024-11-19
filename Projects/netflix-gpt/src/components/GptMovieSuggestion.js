@@ -6,11 +6,10 @@ const GptMovieSuggestion = () => {
 
     const { movieName, movieResults } = useSelector((store) => store.gpt)
     return (
-        <div className="p-4 m-4 text-white bg-black opacity-90">
+        <div className="p-4 overflow-y-auto  opacity-90 text-white ">
             {movieName?.map((movieName, index) => (<MovieList title={movieName} key={movieName} movies={movieResults[index]} />))}
         </div>
     )
 }
-
 export default GptMovieSuggestion
 
