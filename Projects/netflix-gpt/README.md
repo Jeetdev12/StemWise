@@ -50,7 +50,7 @@
   
  
 #Features
-- Login/Sign up form
+- Login/Sign up form..
  -Header
  -BackGround video playing  
 -Browse
