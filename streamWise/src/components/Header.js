@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utilis/UserSlice";
-import { logoURL, SUPPORTED_LANGUAGES } from "../utilis/constants";
+import { SUPPORTED_LANGUAGES } from "../utilis/constants";
 import { toggleGptSearchView } from "../utilis/gptSlice";
 import lang from "../utilis/languageConstants";
 import { changeLanguage } from "../utilis/configSlice";
+import logo from "../assets/logoo.png"
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const Header = () => {
 
     return (
         <div className="fixed  w-screen px-[20%] md:px-8  bg-gradient-to-bl from-black sm:bg-blue-900 md:bg-green-900 z-30 flex flex-col md:flex-row justify-between">
-            <img className="w-44 mx-auto md:mx-0" src={logoURL} alt="logo" />
+            <img className="w-44 mx-auto md:mx-0" src={logo} alt="logo" />
             {user && (
                 <div className="  flex p-2 justify-between ">
                     {showGptSearch && (
