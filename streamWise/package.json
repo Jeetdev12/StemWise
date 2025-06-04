@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc-5dcb0097-20240918",
     "firebase": "^10.13.1",
+    "nodeman": "^1.1.2",
     "openai": "^4.65.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
