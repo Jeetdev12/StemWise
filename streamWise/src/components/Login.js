@@ -85,55 +85,71 @@ const Login = () => {
     setisSignInform(!isSignInForm);
   };
   return (
-    <div>
+    <div className="relative h-screen w-screen overflow-hidden text-white">
       <Header />
-      <div className="fixed">
-        <img className="h-screen w-screen object-cover" src={backgroundURL} alt="bg" />
-      </div>
-      <form
-        onSubmit={(e) => e.preventDefault()}
-        className=" w-full md:w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 rounded-xl bg-opacity-80 text-white "
-      >
-        <h1 className=" font-bold text-2xl p-2 m-4 text-white ">
-          {isSignInForm ? "Sign In" : "Sign Up"}{" "}
-        </h1>
+      <img
+        src={backgroundURL}
+        alt="Background"
+        className="absolute top-0 left-0 h-full w-full object-cover -z-10"
+      />
 
-        {!isSignInForm && (
-          <input
-            ref={name}
-            type="text"
-            placeholder="Full Name "
-            className="p-2 m-2 w-full bg-opacity-35 border-grey-50 bg-gray-700"
-          />
-        )}
-        <input
-          ref={email}
-          type="text"
-          placeholder="Email or mobile number"
-          className="p-2 m-2 w-full bg-opacity-35 border-grey-50 bg-gray-700"
-        />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-2 m-2 w-full bg-opacity-35 bg-gray-700  border border-gray-500 rounded-md "
-        />
-        <p className="text-red-200 py-0 px-1  ">{errorMessage}</p>
-        <button
-          className="bg-red-600 px-12 py-2 my-3 w-full "
-          onClick={handleButtonClick}
+      <div className="flex justify-center items-center h-full">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="bg-black bg-opacity-70 p-10 w-full max-w-md rounded-xl shadow-xl backdrop-blur-md"
         >
-          {isSignInForm ? "Sign In" : "Sign Up"}
-        </button>
+          <h1 className="text-3xl font-bold mb-6 text-center">
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </h1>
 
-        <p className="py-4 m-2 cursor-pointer" onClick={toggleSignInForm}>
-          {isSignInForm
-            ? "New to StemWise? Sign Up Now"
-            : "Alredy Registered ?Sign In"}
-        </p>
-      </form>
+          {!isSignInForm && (
+            <input
+              ref={name}
+              type="text"
+              placeholder="Full Name"
+              className="w-full p-3 mb-4 rounded-md bg-gray-800 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+            />
+          )}
+
+          <input
+            ref={email}
+            type="email"
+            placeholder="Email or mobile number"
+            className="w-full p-3 mb-4 rounded-md bg-gray-800 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+
+          <input
+            ref={password}
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 mb-4 rounded-md bg-gray-800 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+          />
+
+          {errorMessage && (
+            <p className="text-red-400 text-sm mb-2">{errorMessage}</p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-red-600 hover:bg-red-700 transition-colors duration-300 p-3 rounded-md font-semibold"
+            onClick={handleButtonClick}
+          >
+            {isSignInForm ? "Sign In" : "Sign Up"}
+          </button>
+
+          <p
+            className="mt-6 text-center text-sm cursor-pointer hover:underline"
+            onClick={toggleSignInForm}
+          >
+            {isSignInForm
+              ? "New to Netflix? Sign Up Now"
+              : "Already registered? Sign In"}
+          </p>
+        </form>
+      </div>
     </div>
   );
+
 };
 
 export default Login;
