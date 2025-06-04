@@ -59,40 +59,58 @@ const Header = () => {
     const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
     return (
-        <div className="fixed  w-screen px-[20%] md:px-8  bg-gradient-to-bl from-black sm:bg-blue-900 md:bg-green-900 z-30 flex flex-col md:flex-row justify-between">
-            <img className="w-44 mx-auto md:mx-0" src={logo} alt="logo" />
-            {user && (
-                <div className="  flex p-2 justify-between ">
-                    {showGptSearch && (
-                        <select
-                            className="p-2 m-2 bg-gray-900 text-white"
-                            onClick={handleLanguageChange}
-                        >
-                            {SUPPORTED_LANGUAGES.map((lang) => (
-                                <option key={lang.identifier} value={lang.identifier}>
-                                    {lang.name}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                    <button
-                        className="py-2 px-4 my-2 mx-4 bg-green-700 text-white rounded-sm"
-                        onClick={handleGptSearchClick}
-                    >
-                        {showGptSearch ? "Homepage" : "GPT Search"}
-                    </button>
-                    <img
-                        className="hidden md:block w-9 h-9 mt-3 rounded-full"
-                        alt="usericon"
-                        src={user.photoURL}
-                    />
-                    <button className="font-bold text-white p-2" onClick={handleSignOut}>
-                        Sign Out
-                    </button>
+        <header className="fixed top-0 left-0 w-full bg-[#0f172a] shadow-lg z-30">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+                {/* Logo */}
+                <div className="flex-shrink-0">
+                    <img src={logo} alt="logo" className="w-40" />
                 </div>
-            )}
-        </div>
+
+                {/* Right Controls */}
+                {user && (
+                    <div className="flex items-center space-x-4">
+                        {/* Language Selector */}
+                        {showGptSearch && (
+                            <select
+                                onChange={handleLanguageChange}
+                                className="p-2 bg-gray-800 text-white rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                            >
+                                {SUPPORTED_LANGUAGES.map((lang) => (
+                                    <option key={lang.identifier} value={lang.identifier}>
+                                        {lang.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+
+                        {/* GPT Toggle */}
+                        <button
+                            onClick={handleGptSearchClick}
+                            className="py-2 px-4 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition duration-200"
+                        >
+                            {showGptSearch ? "Homepage" : "GPT Search"}
+                        </button>
+
+                        {/* Profile Image */}
+                        <img
+                            src={user.photoURL}
+                            alt="User"
+                            className="hidden md:block w-10 h-10 rounded-full border-2 border-green-500"
+                        />
+
+                        {/* Sign Out Button */}
+                        <button
+                            onClick={handleSignOut}
+                            className="text-white font-semibold text-sm hover:underline"
+                        >
+                            Sign Out
+                        </button>
+                    </div>
+                )}
+            </div>
+        </header>
     );
+
 };
 
 export default Header;
