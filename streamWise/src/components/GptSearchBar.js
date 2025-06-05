@@ -29,7 +29,9 @@ const GptSearchBar = () => {
             console.error("Search input is empty.");
             return;
         }
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+
         const gptQuery =
             "Act as a Movie Recommendation system and suggest some movies for the query : " +
             searchText.current.value +
@@ -37,7 +39,12 @@ const GptSearchBar = () => {
 
         const result = await model.generateContent(gptQuery);
         const text = await result.response.text();
-        const gptMovies = text.split(",");
+        //const gptMovies = text.split(",");
+        const gptMovies = text
+            .split(",")
+            .map((movie) => movie.trim())
+            .filter((movie) => movie.length > 0);
+
         console.log(gptMovies);
         // setResponse(gptMovies);
         const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
