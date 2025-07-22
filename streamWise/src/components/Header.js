@@ -1,116 +1,138 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../utilis/firebase";
-import { useNavigate } from "react-router-dom";
+import { auth } from "../utils/firebase";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addUser, removeUser } from "../utilis/UserSlice";
-import { SUPPORTED_LANGUAGES } from "../utilis/constants";
-import { toggleGptSearchView } from "../utilis/gptSlice";
-import lang from "../utilis/languageConstants";
-import { changeLanguage } from "../utilis/configSlice";
-import logo from "../assets/logoo.png"
+import { addUser, removeUser } from "../utils/UserSlice";
+import { SUPPORTED_LANGUAGES } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
+import logoo from "../assets/logoo.png";
+
+// ShadCN UI
+import { Button } from "../components/ui/button";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from "../components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "../components/ui/dropdown-menu";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "../components/ui/select";
 
 const Header = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector((store) => store.user);
-    const handleSignOut = () => {
-        signOut(auth)
-            .then(() => {
-                navigate("/");
-                // Sign-out successful.
-            })
-            .catch((error) => {
-                // An error happened.
-                navigate("/error");
-            });
-    };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const { uid, email, displayName, photoURL } = user;
-                dispatch(
-                    addUser({
-                        uid: uid,
-                        email: email,
-                        displayName: displayName,
-                        photoURL,
-                    })
-                );
-                navigate("/browse");
-            } else {
-                dispatch(removeUser());
-                navigate("/");
-            }
-        });
-        // Insubscribe when component unmounts
-        return () => unsubscribe();
-    }, []);
-    const handleGptSearchClick = () => {
-        //toggle GPT search
-        dispatch(toggleGptSearchView());
-    };
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => navigate("/"))
+      .catch(() => navigate("/error"));
+  };
 
-    const handleLanguageChange = (e) => {
-        dispatch(changeLanguage(e.target.value));
-    };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(addUser({ uid, email, displayName, photoURL }));
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
 
-    const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
+    return () => unsubscribe();
+  }, []);
 
-    return (
-        <header className="fixed top-0 left-0 w-full bg-[#0f172a] shadow-lg z-30">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
-                {/* Logo */}
-                <div className="flex-shrink-0">
-                    <img src={logo} alt="logo" className="w-40" />
-                </div>
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
 
-                {/* Right Controls */}
-                {user && (
-                    <div className="flex items-center space-x-4">
-                        {/* Language Selector */}
-                        {showGptSearch && (
-                            <select
-                                onChange={handleLanguageChange}
-                                className="p-2 bg-gray-800 text-white rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                            >
-                                {SUPPORTED_LANGUAGES.map((lang) => (
-                                    <option key={lang.identifier} value={lang.identifier}>
-                                        {lang.name}
-                                    </option>
-                                ))}
-                            </select>
-                        )}
+  const handleLanguageChange = (value) => {
+    dispatch(changeLanguage(value));
+  };
 
-                        {/* GPT Toggle */}
-                        <button
-                            onClick={handleGptSearchClick}
-                            className="py-2 px-4 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition duration-200"
-                        >
-                            {showGptSearch ? "Homepage" : "GPT Search"}
-                        </button>
+  return (
+    <header className="fixed top-0 left-0 w-full bg-[#0f172a] shadow-md z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+        {/* Logo */}
+        <img src={logoo} alt="App Logo" className="w-36 md:w-44" />
 
-                        {/* Profile Image */}
-                        <img
-                            src={user.photoURL}
-                            alt="User"
-                            className="hidden md:block w-10 h-10 rounded-full border-2 border-green-500"
-                        />
+        {/* Right Side Controls */}
+        <div className="flex items-center space-x-4">
+          {user ? (
+            <>
+              {/* Language Selector */}
+              {showGptSearch && (
+                <Select onValueChange={handleLanguageChange}>
+                  <SelectTrigger className="w-[130px] bg-gray-800 text-white border border-gray-700">
+                    <SelectValue placeholder="Language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SUPPORTED_LANGUAGES.map((lang) => (
+                      <SelectItem
+                        key={lang.identifier}
+                        value={lang.identifier}
+                      >
+                        {lang.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
 
-                        {/* Sign Out Button */}
-                        <button
-                            onClick={handleSignOut}
-                            className="text-white font-semibold text-sm hover:underline"
-                        >
-                            Sign Out
-                        </button>
-                    </div>
-                )}
-            </div>
-        </header>
-    );
+              {/* GPT Toggle Button */}
+              <Button
+                variant="default"
+                className="bg-green-600 hover:bg-green-700"
+                onClick={handleGptSearchClick}
+              >
+                {showGptSearch ? "Homepage" : "GPT Search"}
+              </Button>
 
+              {/* Avatar + Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="cursor-pointer">
+                    <AvatarImage src={user.photoURL} alt={user.displayName || "User"} />
+                    <AvatarFallback>{user.displayName?.[0] || "U"}</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-48">
+                  <DropdownMenuItem onClick={handleSignOut}>Sign Out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : (
+            <Button
+              variant="destructive"
+              onClick={() => navigate("/login")}
+              className="px-4 py-2 text-white"
+            >
+              Sign In
+            </Button>
+            
+          )}
+          <Link className="px-4 py-2 text-white" to='/login'>
+          Sign up
+            </Link>
+        </div>
+      </div>
+    </header>
+  );
 };
 
 export default Header;

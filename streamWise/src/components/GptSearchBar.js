@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import lang from "../utilis/languageConstants";
+import lang from "../utils/languageConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { API_KEY, API_OPTIONS } from "../utilis/constants";
-import { addGptMovieResult } from "../utilis/gptSlice";
+import { API_KEY, API_OPTIONS } from "../utils/constants";
+import { addGptMovieResult } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
     const dispatch = useDispatch();

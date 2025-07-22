@@ -3,16 +3,16 @@
 
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import { checkValidData } from "../utilis/Validation";
+import { checkValidData } from "../utils/Validation";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../utilis/firebase";
+import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utilis/UserSlice";
-import { backgroundURL, profileURL } from "../utilis/constants";
+import { addUser } from "../utils/UserSlice";
+import { backgroundURL, profileURL } from "../utils/constants";
 import {
   Card,
   CardAction,
@@ -112,7 +112,7 @@ const Login = () => {
             {/* <CardAction>
               <Button variant="link">Sign Up</Button>
             </CardAction> */}
-            <form
+            <form 
               onSubmit={(e) => e.preventDefault()}
             >
               {!isSignInForm && (
