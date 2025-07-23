@@ -7,7 +7,7 @@ import { addUser, removeUser } from "../utils/UserSlice";
 import { SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGptSearchView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/configSlice";
-import logoo from "../assets/logoo.png";
+import logoo from "../assets/newLogo.png";
 
 // ShadCN UI
 import { Button } from "../components/ui/button";
@@ -70,7 +70,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
         {/* Logo */}
         <Link to='/login'>
-        <img src={logoo} alt="App Logo" className="w-36 md:w-44" />
+        <img src={logoo} alt="App Logo" className="w-10 md:w-20 h-15" />
         </Link>
         
 
