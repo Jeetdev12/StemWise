@@ -14,7 +14,7 @@ const GptMovieSuggestion = () => {
             </h2>
 
             <div className="">
-                {movieName.map((name, index) => (
+                {movieName?.map((name, index) => (
                     <div key={name} className="bg-white/5 rounded-lg p-4 md:p-6 shadow hover:shadow-lg transition">
                         <h3 className="text-xl md:text-2xl font-semibold text-green-300 mb-2">{name}</h3>
                         <MovieList title={null} movies={movieResults[index]} />

@@ -69,11 +69,14 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full bg-[#0f172a] shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
         {/* Logo */}
+        <Link to='/login'>
         <img src={logoo} alt="App Logo" className="w-36 md:w-44" />
+        </Link>
+        
 
         {/* Right Side Controls */}
         <div className="flex items-center space-x-4">
-          {user ? (
+          {user && (
             <>
               {/* Language Selector */}
               {showGptSearch && (
@@ -116,19 +119,8 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
-          ) : (
-            <Button
-              variant="destructive"
-              onClick={() => navigate("/login")}
-              className="px-4 py-2 text-white"
-            >
-              Sign In
-            </Button>
-            
-          )}
-          <Link className="px-4 py-2 text-white" to='/login'>
-          Sign up
-            </Link>
+          ) }
+
         </div>
       </div>
     </header>
