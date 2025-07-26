@@ -3,6 +3,8 @@ import Login from "./Login";
 import Browse from "./Browse";
 import Home from "./Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import GptRecommended from "./GptRecommended";
+import Header from "./Header";
 const Body = () => {
     const appRouter = createBrowserRouter([
         {
@@ -21,6 +23,16 @@ const Body = () => {
             path: "/home",
             element: <Home />,
         },
+        {
+            path: "/gptmovies",
+            element: (
+                <>
+                    <Header />
+                    <GptRecommended />
+                </>
+            ),
+        }
+
     ]);
     return (
         <div>

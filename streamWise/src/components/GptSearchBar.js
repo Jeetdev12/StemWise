@@ -62,7 +62,7 @@ const GptSearchBar = () => {
         }
     };
     return (
-        <div className="sticky top-11 md:top-0 z-10 bg-gradient-to-b from-black to-gray-900 py-11 md:py-6 flex justify-center">
+        <div className="sticky top-11 md:top-0 z-10  py-11 md:py-6 flex justify-center">
             <form
                 className="bg-white rounded-lg shadow-md flex w-[90%] md:w-[60%] lg:w-[40%] overflow-hidden"
                 onSubmit={(e) => e.preventDefault()}

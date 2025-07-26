@@ -19,10 +19,10 @@ const Browse = () => {
     return (
         <div>
             <Header />
-            {showGptSearch ? <GptSearch /> : <><MainContainer />
-                <SecondaryContainer /></>}
-
-
+            <><MainContainer />
+                <SecondaryContainer /></>
+            {/* {showGptSearch ? <GptSearch /> : <><MainContainer />
+                <SecondaryContainer /></>} */}
             {/*
             
                   main container

@@ -2,7 +2,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addUser, removeUser } from "../utils/UserSlice";
 import { SUPPORTED_LANGUAGES } from "../utils/constants";
 import { toggleGptSearchView } from "../utils/gptSlice";
@@ -33,6 +33,7 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [toggle, setToggle] = useState(false)
   const user = useSelector((store) => store.user);
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
@@ -47,7 +48,7 @@ const Header = () => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(addUser({ uid, email, displayName, photoURL }));
-        navigate("/browse");
+        // navigate("/browse");
       } else {
         dispatch(removeUser());
         navigate("/");
@@ -58,21 +59,27 @@ const Header = () => {
   }, []);
 
   const handleGptSearchClick = () => {
-    dispatch(toggleGptSearchView());
+    // dispatch(toggleGptSearchView());
+    console.log("Button clicked..")
+    navigate ("/gptmovies");
+
   };
+
+
+
 
   const handleLanguageChange = (value) => {
     dispatch(changeLanguage(value));
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-[#0f172a] shadow-md z-50">
+    <header className="fixed top-0 left-0 w-full  shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
         {/* Logo */}
+
         <Link to='/login'>
-        <img src={logoo} alt="App Logo" className="w-10 md:w-20 h-15" />
+          <img src={logoo} alt="App Logo" className="w-10 md:w-20 h-15" />
         </Link>
-        
 
         {/* Right Side Controls */}
         <div className="flex items-center space-x-4">
@@ -98,6 +105,7 @@ const Header = () => {
               )}
 
               {/* GPT Toggle Button */}
+
               <Button
                 variant="default"
                 className="bg-green-600 hover:bg-green-700"
@@ -119,7 +127,7 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </>
-          ) }
+          )}
 
         </div>
       </div>
