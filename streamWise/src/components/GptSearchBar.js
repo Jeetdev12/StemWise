@@ -26,8 +26,15 @@ const GptSearchBar = () => {
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const gptQuery =
-      `Act as a Movie Recommendation system and suggest 4 movies for the query: "${query}". ` +
-      `Only return names, comma-separated. Example: Inception, Avatar, Titanic, Interstellar`;
+      `You are a professional Movie Recommendation system. Based on the user query: "${query}", suggest 6 highly relevant movies.` +
+      `\n\nGuidelines:` +
+      `\n- Choose movies that best match the user's interest.` +
+      `\n- Prioritize critically acclaimed or popular titles (unless the query asks for underrated/gems).` +
+      `\n- Avoid recommending sequels or similar-titled films unless clearly asked.` +
+      `\n- Be genre-aware: match the query tone (comedy, thriller, sci-fi, etc.).` +
+      `\n- Only return movie names, strictly comma-separated with no additional explanation.` +
+      `\n\nExample Output: The Dark Knight, Inception, Fight Club, The Matrix`;
+
 
     const result = await model.generateContent(gptQuery);
     const text = await result.response.text();
@@ -48,13 +55,13 @@ const GptSearchBar = () => {
 
   return (
     <form
-      className="z-20 fixed w-full flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-gray-600 backdrop-blur-lg p-1 rounded-lg shadow-lg max-w-3xl mx-auto"
+      className="z-20 fixed w-full flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-gray-600 backdrop-blur-lg  rounded-lg shadow-lg max-w-3xl mx-auto"
       onSubmit={(e) => e.preventDefault()}
     >
       <input
         ref={searchText}
         type="text"
-        className="w-full px-4 py-2 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="w-full bg-gray-200 px-4 py-2 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-green-400"
         placeholder={lang[langkey].gptSearchPlaceholder}
       />
       <button

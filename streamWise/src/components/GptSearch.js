@@ -4,6 +4,7 @@ import Header from "./Header";
 import GptSearchBar from "./GptSearchBar";
 import MovieCard from "./MovieCard";
 import { backgroundURL } from "../utils/constants";
+import Footer from "./Footer";
 
 const GptSearch = () => {
     const { movieResults, movieName } = useSelector((store) => store.gpt);
@@ -26,28 +27,21 @@ const GptSearch = () => {
             </div>
 
             {/* Main Content */}
-            <div className="relative z-10   px-6 sm:px-12 overflow-y-hidden scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-transparent">
+            <div className="relative z-10   px-6 sm:px-8 overflow-y-hidden scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-transparent">
                 {/* Search Bar */}
                 <div className="max-w-4xl mx-auto mb-3 mt-24">
                     <GptSearchBar />
                 </div>
 
-                {/* Title */}
-                {/* {movieName && (
-                    <h2 className="text-2xl font-semibold mb-6 text-center">
-                        Showing results for:{" "}
-                        <span className="text-red-400">"{movieName}"</span>
-                    </h2>
-                )} */}
 
                 {/* Movie Results Grid */}
                 {hasResults ? (
-                    <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
+                    <div className="mt-[15%] grid gap-2 sm:grid-cols-2 md:grid-cols-6 bg-black opacity-80">
                         {movieResults?.map((group, i) => (
                           group.length>0&&  group?.map((movie) => (movie?.poster_path&&
                                 <div
                                     key={movie.id}
-                                    className="transform transition duration-300 hover:scale-105 h-50 w-50"
+                                    className="transform transition duration-300 hover:scale-[1.1] h-full w-full"
                                 >
                                     <MovieCard
                                         posterPath={movie?.poster_path}
@@ -68,6 +62,7 @@ const GptSearch = () => {
                     </div>
                 )}
             </div>
+            <Footer/>
         </div>
     );
 };

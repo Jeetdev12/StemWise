@@ -29,7 +29,7 @@ const Home = () => {
 
           <div className="mt-6 flex flex-col md:justify-center sm:flex-row items-center gap-4 w-full max-w-2xl px-4">
 
-            <Button className="bg-red-700 hover:bg-red-600 text-white px-6 py-3 text-lg rounded-md transition-all duration-300" onClick={()=>navigate('/browse')}>
+            <Button className="bg-green-700 hover:bg-green-600 text-white px-6 py-3 text-lg rounded-md transition-all duration-300" onClick={()=>navigate('/browse')}>
               Get Started
             </Button>
           </div>

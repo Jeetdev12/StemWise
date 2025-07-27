@@ -78,7 +78,7 @@ const Header = () => {
         {/* Logo */}
         <Link to="/home" className="flex items-center gap-2">
           <img src={logoo} alt="App Logo" className="w-10 md:w-20 h-auto" />
-          <span className="text-white font-bold text-lg md:text-xl hidden sm:block">MovieStream</span>
+          {/* <span className="text-white font-bold text-lg md:text-xl hidden sm:block">MovieStream</span> */}
         </Link>
 
         {/* Controls */}
@@ -110,7 +110,7 @@ const Header = () => {
               className="bg-green-600 hover:bg-green-700 transition duration-200"
               onClick={handleGptSearchClick}
             >
-              {showGptSearch ? "Homepage" : "GPT Search"}
+              {showGptSearch ? "Back" : "GPT Search"}
             </Button>
 
             <DropdownMenu>
