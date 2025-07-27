@@ -6,7 +6,7 @@ const MovieCard = ({ posterPath }) => {
   if (!posterPath) return null;
 
   return (
-    <Card className="w-40 h-30  relative transition-transform hover:scale-105 duration-200 flex flex-col items-center shadow-md  m-2 ">
+    <Card className="w-40 h-30  relative transition-transform hover:scale-[1.1] duration-500 flex flex-col items-center shadow-lg  m-2 border-none">
       <CardContent className="p-1 flex items-center justify-center">
         <img
           alt="Movie Card"

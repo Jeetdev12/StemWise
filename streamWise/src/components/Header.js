@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/UserSlice";
@@ -33,12 +33,13 @@ import GptSearchBar from "./GptSearchBar";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((store) => store.user);
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => navigate("/"))
+      .then(() => navigate("/browse"))
       .catch(() => navigate("/error"));
   };
 
@@ -47,9 +48,15 @@ const Header = () => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(addUser({ uid, email, displayName, photoURL }));
+        if (location.pathname === "/" || location.pathname === "/login") {
+          navigate("/browse");
+        }
+
       } else {
         dispatch(removeUser());
-        navigate("/");
+        // if (location.pathname !== "/" && location.pathname !== "/login") {
+        //   navigate("/");
+        // }
       }
     });
     return () => unsubscribe();
@@ -57,7 +64,8 @@ const Header = () => {
 
   const handleGptSearchClick = () => {
     dispatch(toggleGptSearchView());
-    navigate(showGptSearch? "/browse":"/gptmovies");
+
+   user? navigate(showGptSearch ? "/browse" : "/gptmovies"): navigate('/signin')
   };
 
   const handleLanguageChange = (value) => {
@@ -68,13 +76,13 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-black/60 border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/login" className="flex items-center gap-2">
+        <Link to="/home" className="flex items-center gap-2">
           <img src={logoo} alt="App Logo" className="w-10 md:w-20 h-auto" />
           <span className="text-white font-bold text-lg md:text-xl hidden sm:block">MovieStream</span>
         </Link>
 
         {/* Controls */}
-        {user && (
+        {user ? (
           <div className="flex items-center gap-3 sm:gap-5">
             {/* {showGptSearch && <GptSearchBar />} */}
 
@@ -125,7 +133,15 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        )}
+        ) : <Button
+          onClick={() => navigate('/login')}
+          variant="default"
+          className="text-white bg-red-600 hover:bg-red-700 transition-colors duration-200 font-medium rounded-md"
+        >
+          Sign in
+        </Button>
+        }
+
       </div>
     </header>
   );
