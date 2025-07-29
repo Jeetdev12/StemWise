@@ -73,18 +73,17 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-black/60 border-b border-white/10">
+    <header className="fixed top-0 z-50 w-full shadow-sm transition-transform duration-300  backdrop-blur-md bg-black/60 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         {/* Logo */}
         <Link to="/home" className="flex items-center gap-2">
           <img src={logoo} alt="App Logo" className="w-10 md:w-20 h-auto" />
-          {/* <span className="text-white font-bold text-lg md:text-xl hidden sm:block">MovieStream</span> */}
+          
         </Link>
 
         {/* Controls */}
         {user ? (
           <div className="flex items-center gap-3 sm:gap-5">
-            {/* {showGptSearch && <GptSearchBar />} */}
 
             {showGptSearch && (
               <Select onValueChange={handleLanguageChange}>

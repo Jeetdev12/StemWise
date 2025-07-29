@@ -22,5 +22,5 @@ export const SUPPORTED_LANGUAGES = [
 export const IMG_CDN = "https://image.tmdb.org/t/p/w500/"
 
 
-export const API_KEY = "AIzaSyDSJnSHKcrIphwCFBKkO6ZYgLEiC1d9N2A"; // Google gemini ai API key
+export const API_KEY = "AIzaSyCPzytczBoM1gXJmm-9glqWwx3s9srF-rk"; // Google gemini ai API key
 

@@ -4,7 +4,7 @@ const Footer = () => {
 
 
     return (
-        <footer className="bg-black text-gray-400 px-6 py-10 text-sm mb-0">
+        <footer className="bg-black text-gray-400 px-6 py-10 text-sm mb-0 mb-0">
             <div className="max-w-6xl mx-auto">
                 <p className="mb-6">Questions? Call <a href="tel:000-800-919-1694" className="underline hover:text-white">000-800-919-1694</a></p>
 

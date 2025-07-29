@@ -1,14 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import lang from "../utils/languageConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { API_KEY, API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
+import { Search } from "lucide-react";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch();
   const searchText = useRef(null);
   const langkey = useSelector((store) => store.config.lang);
+  const [gptResponse,setGptResponse] = useState([])
   const genAI = new GoogleGenerativeAI(API_KEY);
 
   const searchMovieTMDB = async (movie) => {
@@ -43,35 +45,45 @@ const GptSearchBar = () => {
       .split(",")
       .map((movie) => movie.trim())
       .filter((movie) => movie.length > 0);
+      console.log("gptResponse:",text,result)
 
     const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
     const tmdbResult = await Promise.all(promiseArray);
+    console.log(tmdbResult)
     const filteredResults = tmdbResult.filter((arr) => arr[0]);
-
+        //  setGptResponse(tmdbResult)
     dispatch(
       addGptMovieResult({ movieName: query, movieResults: filteredResults })
     );
   };
 
   return (
-    <form
-      className="z-20 fixed w-full flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-gray-600 backdrop-blur-lg  rounded-lg shadow-lg max-w-3xl mx-auto"
+    <div>
+      
+    <div
+      className="  p-2  z-20 fixed w-full flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-black opacity-70 backdrop-blur-lg  rounded-full shadow-lg max-w-3xl mx-auto"
       onSubmit={(e) => e.preventDefault()}
     >
       <input
         ref={searchText}
         type="text"
-        className="w-full bg-gray-200 px-4 py-2 rounded-md text-black focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="w-full bg-transparent ml-2 px-4 py-3 rounded-full text-white focus:outline-none "
         placeholder={lang[langkey].gptSearchPlaceholder}
       />
       <button
         type="button"
         onClick={handleGptSearchClick}
-        className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-md font-semibold transition-all"
+        className=" hover:bg-gray-400 text-white px-6 py-3 rounded-full font-semibold transition-all"
       >
-        {lang[langkey].Search}
+        <Search className="text-green"/>
       </button>
-    </form>
+    </div>
+
+     <div>
+      <p>{gptResponse}</p>
+     </div>
+
+    </div>
   );
 };
 
