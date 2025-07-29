@@ -22,12 +22,14 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/ui/card"
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
   const [isSignInForm, setisSignInform] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const name = useRef(null);
   const email = useRef(null);
@@ -82,6 +84,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           // console.log(user);
+          navigate('/home')
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -120,7 +123,7 @@ const Login = () => {
                   ref={name}
                   type="text"
                   placeholder="Full Name"
-                  className="w-full p-3 mb-4 rounded-md bg-gray-800  border-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-full p-3 mb-4 rounded-md bg-gray-800  border-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               )}
 
@@ -128,23 +131,23 @@ const Login = () => {
                 ref={email}
                 type="email"
                 placeholder="Email or mobile number"
-                className="w-full p-3 mb-4 rounded-md bg-gray-800 border-md placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full p-3 mb-4 rounded-md bg-gray-800 border-md placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
 
               <input
                 ref={password}
                 type="password"
                 placeholder="Password"
-                className="w-full p-3 mb-4 rounded-md bg-gray-800 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full p-3 mb-4 rounded-md bg-gray-800 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
 
               {errorMessage && (
-                <p className="text-red-400 text-sm mb-2">{errorMessage}</p>
+                <p className="text-green-400 text-sm mb-2">{errorMessage}</p>
               )}
 
               <button
                 type="submit"
-                className="w-full bg-red-600 hover:bg-red-700 transition-colors duration-300 p-3 rounded-md font-semibold"
+                className="w-full bg-green-600 hover:bg-green-700 transition-colors duration-300 p-3 rounded-md font-semibold"
                 onClick={handleButtonClick}
               >
                 {isSignInForm ? "Sign In" : "Sign Up"}

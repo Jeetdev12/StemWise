@@ -39,7 +39,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => navigate("/browse"))
+      .then(() => navigate("/home"))
       .catch(() => navigate("/error"));
   };
 
@@ -54,9 +54,9 @@ const Header = () => {
 
       } else {
         dispatch(removeUser());
-        // if (location.pathname !== "/" && location.pathname !== "/login") {
-        //   navigate("/");
-        // }
+        if (location.pathname !== "/" && location.pathname !== "/login") {
+          navigate("/home");
+        }
       }
     });
     return () => unsubscribe();
@@ -136,7 +136,7 @@ const Header = () => {
         ) : <Button
           onClick={() => navigate('/login')}
           variant="default"
-          className="text-white bg-red-600 hover:bg-red-700 transition-colors duration-200 font-medium rounded-md"
+          className="text-white bg-green-600 hover:bg-green-700 transition-colors duration-200 font-medium rounded-md"
         >
           Sign in
         </Button>
