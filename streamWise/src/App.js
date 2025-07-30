@@ -3,10 +3,11 @@ import { Provider } from 'react-redux';
 import Body from './components/Body';
 import appStore from './utils/AppStore';
 import Header from './components/Header';
+import { API_KEY_URL } from './utils/constants';
 
 
 function App() {
-  console.log("API KEY APP:", process.env.PREACT_APP_API_KEY);
+  console.log("API KEY APP:", API_KEY_URL);
 
   return (
     <div>
