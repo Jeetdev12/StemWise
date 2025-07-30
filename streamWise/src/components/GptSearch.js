@@ -2,20 +2,29 @@ import Header from "./Header";
 import MovieCard from "./MovieCard";
 import { backgroundURL } from "../utils/constants";
 import Footer from "./Footer";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import lang from "../utils/languageConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { API_KEY, API_OPTIONS } from "../utils/constants";
+import {  API_OPTIONS } from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
 import { Search } from "lucide-react";
 
 const GptSearch = () => {
+
     const dispatch = useDispatch();
     const searchText = useRef(null);
     const langkey = useSelector((store) => store.config.lang);
+    // const API = process.env.API_KEY;
     //   const [gptResponse,setGptResponse] = useState([])
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    const genAI = new GoogleGenerativeAI(process.env.PREACT_APP_API_KEY);
+
+    console.log("genAiii:",genAI)
+    useEffect(()=>{
+    console.log("api:",process.env.PREACT_APP_API_KEY)
+          
+    },[])
+
     const { movieResults, movieName } = useSelector((store) => store.gpt);
 
     const hasResults = movieResults?.length > 0;
@@ -31,6 +40,7 @@ const GptSearch = () => {
     };
 
     const handleGptSearchClick = async () => {
+
         const query = searchText.current?.value?.trim();
         if (!query) return;
 
