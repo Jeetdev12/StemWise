@@ -76,10 +76,10 @@ const GptSearch = () => {
                         alt="Background"
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black opacity-60" />
+                    <div className="absolute inset-0 bg-black opacity-80" />
                 </div>
                 <div className="flex items-center justify-center  mt-36 z-30">
-                    <div className="px-5 w- p-2 bg-black fixed flex flex-col sm:flex-row items-center justify-center rounded-full opacity-70 hover:opacity-80"
+                    <div className="px-5 p-2 bg-black fixed flex flex-col sm:flex-row items-center justify-center rounded-full opacity-70 hover:opacity-80"
                     >
                         <input
                             ref={searchText}
@@ -95,11 +95,11 @@ const GptSearch = () => {
                             <Search className="text-green" />
                         </button>
                     </div></div>
-                <div className="mt-[15%] grid gap-2 sm:grid-cols-2 md:grid-cols-6 ">
+                <div className="mt-[8%]  flex flex-cols items-center justify-center">
                     {movieResults?.map((movie, i) => (movie[0]?.poster_path &&
                         <div
                             key={movie[0]?.id || i}
-                            className="transform transition duration-300 hover:scale-[1.1] h-full w-full"
+                            className="transform transition duration-300 hover:scale-[1.0] mx-2"
                         >
                             <MovieCard
                                 posterPath={movie[0]?.poster_path || ''}
@@ -110,7 +110,7 @@ const GptSearch = () => {
                     )}
                 </div>
                 {/* Movie Results Grid */}
-                {hasResults ? (
+                {/* {hasResults ? (
                     <div className="mt-[15%] grid gap-2 sm:grid-cols-2 md:grid-cols-6 ">
                         {movieResults?.map((movie, i) => (movie[0]?.poster_path &&
                             <div
@@ -133,7 +133,7 @@ const GptSearch = () => {
                                 : "Start by typing a movie name above..."}
                         </p>
                     </div>
-                )}
+                )} */}
             </div>
             <Footer />
         </div>
