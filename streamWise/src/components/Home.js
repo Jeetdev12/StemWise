@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import MovieList from "./MovieList";
 
 
 
@@ -17,81 +18,59 @@ const Home = () => {
         navigate('/login')
       }
   }
+      const movies = useSelector((store) => store.movies);
   
 
   return (
-    <div className="bg-black  ">
-      <Header />
+   <div className="min-h-screen bg-black text-white">
+  <Header />
 
-      <section className="relative min-h-screen  text-white overflow-hidden">
-        <img
-          src={backgroundURL}
-          alt="Background"
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-        />
+  <section className="relative h-[90vh] overflow-hidden flex items-center justify-center text-center px-4">
+    <img
+      src={backgroundURL}
+      alt="Background"
+      className="absolute inset-0 w-full h-full object-cover opacity-25"
+    />
+    <div className="absolute inset-0 bg-black opacity-50" />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/60 to-black/90 opacity-40" />
-
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 mt-[15%]">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight max-w-4xl">
-            Unlimited movies, TV shows, and more
-          </h1>
-
-          <div className="mt-6 flex flex-col md:justify-center sm:flex-row items-center gap-4 w-full max-w-2xl px-4">
-
-            <Button className="bg-green-700 hover:bg-green-600 text-white px-6 py-3 text-lg rounded-md transition-all duration-300" onClick={handleClick}>
-              Get Started
-            </Button>
-          </div>
-        </div>
-
-        {/* <div className="absolute bottom-0 w-full">
-          <svg
-            viewBox="0 0 1440 100"
-            preserveAspectRatio="none"
-            className="w-full"
-          >
-            <defs>
-              <linearGradient id="curve-stroke" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#ff0055" />
-                <stop offset="100%" stopColor="#ff3366" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M0,100 C480,0 960,0 1440,100"
-              fill="none"
-              stroke="url(#curve-stroke)"
-              strokeWidth="4"
-            />
-          </svg>
-        </div> */}
-      </section>
-
-
-      {/* <section className="relative w-full ">
-        <svg
-          viewBox="0 0 1440 100"
-          className="w-full"
-          preserveAspectRatio="none"
+    <div className="relative z-10 max-w-4xl mx-auto">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
+        Unlimited movies, TV shows, and more. 
+      </h1>
+      <p className="mt-4 text-lg md:text-xl text-gray-300">
+        Watch anywhere. Cancel anytime.
+      </p>
+      <div className="mt-8">
+        <Button
+          className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg font-semibold rounded-md transition-all duration-300"
+          onClick={handleClick}
         >
-          <defs>
-            <linearGradient id="stroke-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ff0055" />
-              <stop offset="100%" stopColor="#ff3366" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M0,100 C480,0 960,0 1440,100"
-            fill="none"
-            stroke="url(#stroke-gradient)"
-            strokeWidth="3"
-          />
-        </svg>
-
-      </section> */}
-
-      {/* <Footer /> */}
+          Get Started
+        </Button>
+      </div>
     </div>
+  </section>
+
+  <section className="relative w-full -mt-1">
+    <svg
+      viewBox="0 0 1440 100"
+      preserveAspectRatio="none"
+      className="w-full h-20"
+    >
+      <path
+        d="M0,80 C480,0 960,0 1440,80"
+        fill="black"
+      />
+    </svg>
+  </section>
+
+  <section className="px-4 md:px-8 pb-16">
+    <MovieList title="Trending Now" movies={movies.topRatedMovies} />
+  </section>
+
+  <Footer />
+</div>
+
   )
 }
 
