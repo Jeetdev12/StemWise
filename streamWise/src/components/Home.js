@@ -32,7 +32,7 @@ const Home = () => {
     if (user) {
       navigate('/browse')
     } else {
-      navigate('/login')
+      navigate('/home')
     }
   }
   const { movies } = useSelector((store) => store.movies);

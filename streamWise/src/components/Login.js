@@ -84,7 +84,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           // console.log(user);
-          navigate('/home')
+          navigate('/browse')
         })
         .catch((error) => {
           const errorCode = error.code;
