@@ -4,11 +4,16 @@ import Browse from "./Browse";
 import Home from "./Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GptSearch from "./GptSearch";
+import Signup from "./Signup";
 const Body = () => {
     const appRouter = createBrowserRouter([
         {
             path: "/",
-            element: <Login />,
+            element: <Home />,
+        },
+        {
+            path: "/signup",
+            element: <Signup />,
         },
         {
             path: "/browse",
@@ -24,7 +29,7 @@ const Body = () => {
         },
         {
             path: "/gptmovies",
-            element: <GptSearch/>
+            element: <GptSearch />
         }
 
     ]);

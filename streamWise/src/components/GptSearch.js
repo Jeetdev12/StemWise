@@ -1,149 +1,170 @@
 import Header from "./Header";
 import MovieCard from "./MovieCard";
-import { API_KEY_URL, backgroundURL } from "../utils/constants";
-import Footer from "./Footer";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import lang from "../utils/languageConstants";
 import { useDispatch, useSelector } from "react-redux";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { API_OPTIONS } from "../utils/constants";
+import {
+  API_KEY_URL,
+  API_OPTIONS,
+  backgroundURL,
+} from "../utils/constants";
 import { addGptMovieResult } from "../utils/gptSlice";
-import { Search } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 
 const GptSearch = () => {
+  const dispatch = useDispatch();
+  const searchText = useRef(null);
+  const langkey = useSelector((store) => store.config.lang);
+  const { movieResults, movieName } = useSelector((store) => store.gpt);
+  const [loading, setLoading] = useState(false);
+  const genAI = new GoogleGenerativeAI(API_KEY_URL);
 
-    const dispatch = useDispatch();
-    const searchText = useRef(null);
-    const langkey = useSelector((store) => store.config.lang);
-
-    
-    const genAI = new GoogleGenerativeAI(API_KEY_URL);
- 
-
-
-    const { movieResults, movieName } = useSelector((store) => store.gpt);
-
-    const hasResults = movieResults?.length > 0;
-
-
-    const searchMovieTMDB = async (movie) => {
-        const data = await fetch(
-            `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movie)}&include_adult=false&language=en-US&page=1`,
-            API_OPTIONS
-        );
-        const json = await data.json();
-        return json.results;
-    };
-
-    const handleGptSearchClick = async () => {
-
-        const query = searchText.current?.value?.trim();
-        if (!query) return;
-
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const gptQuery =
-            `You are a professional Movie Recommendation system. Based on the user query: "${query}", suggest 6 highly relevant movies.` +
-            `\n\nGuidelines:` +
-            `\n- Choose movies that best match the user's interest.` +
-            `\n- Prioritize critically acclaimed or popular titles (unless the query asks for underrated/gems).` +
-            `\n- Avoid recommending sequels or similar-titled films unless clearly asked.` +
-            `\n- Be genre-aware: match the query tone (comedy, thriller, sci-fi, etc.).` +
-            `\n- Only return movie names, strictly comma-separated with no additional explanation.` +
-            `\n\nExample Output: The Dark Knight, Inception, Fight Club, The Matrix`;
-
-
-        const result = await model.generateContent(gptQuery);
-        const text = await result.response.text();
-
-        const gptMovies = text
-            .split(",")
-            .map((movie) => movie.trim())
-            .filter((movie) => movie.length > 0);
-        console.log("gptResponse:", text, result)
-
-        const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
-        const tmdbResult = await Promise.all(promiseArray);
-        console.log(tmdbResult)
-        const filteredResults = tmdbResult.filter((arr) => arr[0]);
-        //  setGptResponse(tmdbResult)
-        dispatch(
-            addGptMovieResult({ movieName: query, movieResults: filteredResults })
-        );
-    };
-    return (
-        <div >
-            {/* Header */}
-            <Header />
-            <div className=" min-h-screen  text-white">
-                {/* Background Image */}
-                <div className="fixed  inset-0 -z-10">
-                    <img
-                        src={backgroundURL}
-                        alt="Background"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black opacity-80" />
-                </div>
-                <div className="flex items-center justify-center  mt-36 z-30">
-                    <div className="px-5 p-2 bg-black fixed flex flex-col sm:flex-row items-center justify-center rounded-full opacity-70 hover:opacity-80"
-                    >
-                        <input
-                            ref={searchText}
-                            type="text"
-                            className="w-full bg-transparent ml-2 px-4 py-3 rounded-full text-white focus:outline-none "
-                            placeholder={lang[langkey].gptSearchPlaceholder}
-                        />
-                        <button
-                            type="button"
-                            onClick={handleGptSearchClick}
-                            className=" hover:bg-gray-400 text-white px-6 py-3 rounded-full font-semibold transition-all"
-                        >
-                            <Search className="text-green" />
-                        </button>
-                    </div></div>
-                <div className="mt-[8%]  flex flex-cols items-center justify-center">
-                    {movieResults?.map((movie, i) => (movie[0]?.poster_path &&
-                        <div
-                            key={movie[0]?.id || i}
-                            className="transform transition duration-300 hover:scale-[1.0] mx-2"
-                        >
-                            <MovieCard
-                                posterPath={movie[0]?.poster_path || ''}
-                                title={movie[0]?.title || 'Bahubali'}
-                            />
-                        </div>
-                    )
-                    )}
-                </div>
-                {/* Movie Results Grid */}
-                {/* {hasResults ? (
-                    <div className="mt-[15%] grid gap-2 sm:grid-cols-2 md:grid-cols-6 ">
-                        {movieResults?.map((movie, i) => (movie[0]?.poster_path &&
-                            <div
-                                key={movie[0]?.id || i}
-                                className="transform transition duration-300 hover:scale-[1.1] h-full w-full"
-                            >
-                                <MovieCard
-                                    posterPath={movie[0]?.poster_path || ''}
-                                    title={movie[0]?.title || 'Bahubali'}
-                                />
-                            </div>
-                        )
-                        )}
-                    </div>
-                ) : (
-                    <div className="flex items-center justify-center h-[40vh]">
-                        <p className="text-gray-400 text-lg italic">
-                            {movieName
-                                ? "No results found. Try searching with a different name."
-                                : "Start by typing a movie name above..."}
-                        </p>
-                    </div>
-                )} */}
-            </div>
-            <Footer />
-        </div>
+  const searchMovieTMDB = async (movie) => {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
+        movie
+      )}&include_adult=false&language=en-US&page=1`,
+      API_OPTIONS
     );
+
+    const json = await data.json();
+    return json.results;
+  };
+
+  const handleGptSearchClick = async () => {
+    const query = searchText.current?.value?.trim();
+
+    if (!query) return;
+
+    try {
+      setLoading(true);
+
+      const model = genAI.getGenerativeModel({
+        model: "gemini-2.5-flash",
+      });
+
+      const gptQuery = `
+      You are a professional Movie Recommendation system.
+      Based on the user query: "${query}", suggest 6 highly relevant movies.
+      Only return movie names separated by commas.
+      `;
+
+      const result = await model.generateContent(gptQuery);
+      const text = await result.response.text();
+
+      const gptMovies = text
+        .split(",")
+        .map((movie) => movie.trim())
+        .filter(Boolean);
+
+      const promiseArray = gptMovies.map((movie) =>
+        searchMovieTMDB(movie)
+      );
+
+      const tmdbResult = await Promise.all(promiseArray);
+      const filteredResults = tmdbResult.filter((arr) => arr[0]);
+
+      dispatch(
+        addGptMovieResult({
+          movieName: query,
+          movieResults: filteredResults,
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen text-white overflow-hidden">
+      <Header />
+
+      <div className="fixed inset-0 -z-10">
+        <img
+          src={backgroundURL}
+          alt="background"
+          className="w-full h-full object-cover"
+        />
+
+        <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      </div>
+
+      <div className="pt-40 px-4 flex flex-col items-center">
+        <div className="text-center mb-10">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Sparkles className="text-green-500" size={34} />
+            <h1 className="text-4xl md:text-6xl font-bold">
+              AI Movie Search
+            </h1>
+          </div>
+
+          <p className="text-gray-300 text-sm md:text-lg max-w-2xl">
+            Discover movies with AI-powered recommendations tailored to your mood.
+          </p>
+        </div>
+
+        <div className="w-full max-w-3xl">
+          <div className="flex items-center bg-white/10 border border-white/20 backdrop-blur-lg rounded-2xl overflow-hidden shadow-2xl">
+            <input
+              ref={searchText}
+              type="text"
+              placeholder={lang[langkey].gptSearchPlaceholder}
+              className="flex-1 bg-transparent px-6 py-5 text-white placeholder-gray-300 focus:outline-none text-lg"
+            />
+
+            <button
+              onClick={handleGptSearchClick}
+              className="bg-green-600 hover:bg-green-700 px-6 py-5 transition-all duration-300"
+            >
+              <Search />
+            </button>
+          </div>
+        </div>
+
+        {loading && (
+          <div className="mt-10">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-red-500"></div>
+          </div>
+        )}
+        {!loading && movieResults?.length > 0 && (
+          <div className="mt-16 w-full max-w-7xl">
+            <h2 className="text-2xl font-semibold mb-8">
+              Results for "{movieName}"
+            </h2>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+              {movieResults.map(
+                (movie, i) =>
+                  movie[0]?.poster_path && (
+                    <div
+                      key={movie[0]?.id || i}
+                      className="transform hover:scale-105 transition duration-300"
+                    >
+                      <MovieCard
+                        posterPath={movie[0]?.poster_path}
+                        title={movie[0]?.title}
+                      />
+                    </div>
+                  )
+              )}
+            </div>
+          </div>
+        )}
+
+        {!loading && movieResults?.length === 0 && (
+          <div className="mt-24 text-center text-gray-400">
+            <p className="text-lg">
+              Search for movies using AI recommendations ✨
+            </p>
+          </div>
+        )}
+      </div>
+
+    </div>
+  );
 };
 
 export default GptSearch;

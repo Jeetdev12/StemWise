@@ -1,91 +1,59 @@
-import React, { useRef, useState } from "react";
-import lang from "../utils/languageConstants";
-import { useDispatch, useSelector } from "react-redux";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import {  API_OPTIONS } from "../utils/constants";
-import { addGptMovieResult } from "../utils/gptSlice";
-import { Search } from "lucide-react";
 
-const GptSearchBar = () => {
-  const dispatch = useDispatch();
-  const searchText = useRef(null);
-  const langkey = useSelector((store) => store.config.lang);
-  const [gptResponse,setGptResponse] = useState([])
-  const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-    console.log("genAiiiBar:",genAI)
-
-  const searchMovieTMDB = async (movie) => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(movie)}&include_adult=false&language=en-US&page=1`,
-      API_OPTIONS
-    );
-    const json = await data.json();
-    return json.results;
-  };
-
-  const handleGptSearchClick = async () => {
-    const query = searchText.current?.value?.trim();
-    if (!query) return;
-
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const gptQuery =
-      `You are a professional Movie Recommendation system. Based on the user query: "${query}", suggest 6 highly relevant movies.` +
-      `\n\nGuidelines:` +
-      `\n- Choose movies that best match the user's interest.` +
-      `\n- Prioritize critically acclaimed or popular titles (unless the query asks for underrated/gems).` +
-      `\n- Avoid recommending sequels or similar-titled films unless clearly asked.` +
-      `\n- Be genre-aware: match the query tone (comedy, thriller, sci-fi, etc.).` +
-      `\n- Only return movie names, strictly comma-separated with no additional explanation.` +
-      `\n\nExample Output: The Dark Knight, Inception, Fight Club, The Matrix`;
-
-
-    const result = await model.generateContent(gptQuery);
-    const text = await result.response.text();
-
-    const gptMovies = text
-      .split(",")
-      .map((movie) => movie.trim())
-      .filter((movie) => movie.length > 0);
-      console.log("gptResponse:",text,result)
-
-    const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie));
-    const tmdbResult = await Promise.all(promiseArray);
-    console.log(tmdbResult)
-    const filteredResults = tmdbResult.filter((arr) => arr[0]);
-        //  setGptResponse(tmdbResult)
-    dispatch(
-      addGptMovieResult({ movieName: query, movieResults: filteredResults })
-    );
-  };
-
-  return (
-    <div>
+return (
+  <div className="w-full flex justify-center px-4">
+    <div className="w-full max-w-4xl">
       
-    <div
-      className="  p-2  z-20 fixed w-full flex flex-col sm:flex-row items-center gap-2 sm:gap-4 bg-black opacity-70 backdrop-blur-lg  rounded-full shadow-lg max-w-3xl mx-auto"
-      onSubmit={(e) => e.preventDefault()}
-    >
-      <input
-        ref={searchText}
-        type="text"
-        className="w-full bg-transparent ml-2 px-4 py-3 rounded-full text-white focus:outline-none "
-        placeholder={lang[langkey].gptSearchPlaceholder}
-      />
-      <button
-        type="button"
-        onClick={handleGptSearchClick}
-        className=" hover:bg-gray-400 text-white px-6 py-3 rounded-full font-semibold transition-all"
-      >
-        <Search className="text-green"/>
-      </button>
+      <div className="relative group">
+        
+        <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-pink-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
+
+        <div className="relative flex items-center bg-black/60 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+          
+          <div className="pl-5 text-gray-400">
+            <Search size={22} />
+          </div>
+
+          <input
+            ref={searchText}
+            type="text"
+            placeholder={lang[langkey].gptSearchPlaceholder}
+            className="
+              w-full
+              bg-transparent
+              px-4
+              py-5
+              text-white
+              placeholder-gray-400
+              text-lg
+              focus:outline-none
+            "
+          />
+
+          <button
+            type="button"
+            onClick={handleGptSearchClick}
+            className="
+              mr-2
+              px-6
+              py-3
+              rounded-2xl
+              bg-red-600
+              hover:bg-red-700
+              active:scale-95
+              transition-all
+              duration-300
+              font-semibold
+              shadow-lg
+            "
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
+      <p className="text-center text-gray-400 text-sm mt-4">
+        Try: "Mind bending sci-fi movies" or "Feel good comedy movies"
+      </p>
     </div>
-
-     <div>
-      <p>{gptResponse}</p>
-     </div>
-
-    </div>
-  );
-};
-
-export default GptSearchBar;
+  </div>
+);

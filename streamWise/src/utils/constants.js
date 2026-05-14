@@ -19,7 +19,7 @@ export const SUPPORTED_LANGUAGES = [
     { identifier: 'zpn', name: "Japanese" },
 ];
 
-export const IMG_CDN = "https://image.tmdb.org/t/p/w500/"
+export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/"
 
 
 export const API_KEY_URL =process.env.REACT_APP_API_KEY; // Google gemini ai API key only for exampale

@@ -27,8 +27,7 @@ const Browse = () => {
         <GptSearch />
       ) : (
         <>
-          {/* Background Gradient Overlay */}
-          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black via-black/70 to-black/90" />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black via-black/70 to-black/90 gap-4" />
 
           <MainContainer />
           <SecondaryContainer />
