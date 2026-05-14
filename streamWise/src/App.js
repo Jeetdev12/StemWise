@@ -2,7 +2,6 @@
 import { Provider } from 'react-redux';
 import Body from './components/Body';
 import appStore from './utils/AppStore';
-import Header from './components/Header';
 import { API_KEY_URL } from './utils/constants';
 
 

@@ -1,6 +1,6 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback } from "react";
 import { addUser, removeUser } from "../utils/UserSlice";
@@ -32,7 +32,7 @@ export const ROUTES = {
   SIGNIN: "/signin",
 };
 
-const GUEST_PATHS = ["/", ROUTES.LOGIN, ROUTES.HOME, ROUTES.SIGNIN];
+// const GUEST_PATHS = ["/", ROUTES.LOGIN, ROUTES.HOME, ROUTES.SIGNIN];
 
 const pillClass =
   "flex items-center gap-1.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-lg px-3 py-1.5 text-sm text-white/80 hover:text-white transition-all duration-200 cursor-pointer select-none";
@@ -138,7 +138,7 @@ const GuestControls = ({ onSignIn }) => (
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const user = useSelector((store) => store.user);
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
@@ -152,9 +152,10 @@ const Header = () => {
         // }
       } else {
         dispatch(removeUser());
-        if (!GUEST_PATHS.includes(location.pathname)) {
-          navigate("/");
-        }
+         navigate("/");
+        // if (!GUEST_PATHS.includes(location.pathname)) {
+        //   navigate("/");
+        // }
       }
     });
     return () => unsubscribe();

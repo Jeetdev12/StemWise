@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const VideoTitle = ({ title, overview, movieId }) => {
      const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
-
     return (
         <div className="flex flex-col gap-5">
 
@@ -22,13 +21,11 @@ const VideoTitle = ({ title, overview, movieId }) => {
             </p>
 
             <div className="flex items-center gap-3 mt-2">
-
                 <Link
                 to={"https://www.youtube.com/embed/" +
                     trailerVideo?.key +
                     "?&autoplay=1"}
                     target="_blank"
-                    // onClick={() => navigate(`/watch/${movieId}`)}
                     className="flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-black text-sm font-bold tracking-wide hover:bg-white/90 active:scale-[0.97] transition-all duration-150 shadow-lg"
                 >
                     <svg className="w-5 h-5 fill-black" viewBox="0 0 24 24">
@@ -38,7 +35,6 @@ const VideoTitle = ({ title, overview, movieId }) => {
                 </Link>
 
                 <button
-                    // onClick={() => navigate(`/movie/${movieId}`)}
                     className="flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 border border-white/15 text-white text-sm font-semibold tracking-wide hover:bg-white/20 active:scale-[0.97] backdrop-blur-sm transition-all duration-150"
                 >
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
