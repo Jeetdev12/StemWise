@@ -76,6 +76,9 @@ It delivers a modern movie browsing experience with authentication, AI-powered s
 ## 🎬 Browse Page
 <img width="1345" height="605" alt="image" src="https://github.com/user-attachments/assets/ce613dfd-d0a7-49d7-80c5-bce2b437f935" />
 
+## 🎬 Movie suggestion Page 
+<img width="1350" height="754" alt="image" src="https://github.com/user-attachments/assets/a1a5d4d5-b94e-4a61-96ee-6282cea7ac9e" />
+
 
 
 ---
